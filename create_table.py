@@ -6,7 +6,10 @@ import sys
 
 
 def import_file(fle, data_path=None, db_path=None):
+    write_filname = fle
+
     if not db_path:
+        write_filname = os.path.basename(fle)
         db_path = os.path.join(os.curdir, 'resources', 'fedex.db')
 
     if not data_path:
@@ -22,11 +25,11 @@ def import_file(fle, data_path=None, db_path=None):
         data = csv.reader(tabfile, delimiter='\t')
         for n, rec in enumerate(data, 1):
             sql = 'INSERT INTO tbl VALUES(?, ?, ?, ?, ?);'
-            db.execute(sql, (rec[20], rec[21], rec[22], n, fle))
-            db.execute(sql, (rec[27], rec[28], rec[29], n, fle))
-            db.execute(sql, (rec[34], rec[35], rec[36], n, fle))
-            db.execute(sql, (rec[41], rec[42], rec[43], n, fle))
-            db.execute(sql, (rec[48], rec[49], rec[50], n, fle))
+            db.execute(sql, (rec[20], rec[21], rec[22], n, write_filname))
+            db.execute(sql, (rec[27], rec[28], rec[29], n, write_filname))
+            db.execute(sql, (rec[34], rec[35], rec[36], n, write_filname))
+            db.execute(sql, (rec[41], rec[42], rec[43], n, write_filname))
+            db.execute(sql, (rec[48], rec[49], rec[50], n, write_filname))
 
     db.commit()
     db.close()
