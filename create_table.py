@@ -43,8 +43,9 @@ def export_table(db_path=None, table_path=None):
 
     # with open(table_path, 'w', encoding='UTF-8', newline='\n') as t:
     with open(table_path, 'w') as t:
-        table = csv.writer(t, delimiter='\t', quoting=csv.QUOTE_ALL)
-        table.writerow(['ADOJT', 'ADOST', 'ADPR', 'recNo', 'Source'])
+        table = csv.writer(t, delimiter='\t', quoting=csv.QUOTE_ALL, lineterminator="\n")
+        header = ['ADOJT', 'ADOST', 'ADPR', 'recNo', 'Source']
+        table.writerow(header)
 
         qry = db.execute(("SELECT "
                           "TRIM(ADOJT) AS ADOJT, "
@@ -87,7 +88,6 @@ def main(fle, relative_path=True):
 
 
 if __name__ == '__main__':
-    # print(sys.version_info[0])
     try:
         main(sys.argv[1], True)
     except IndexError:
